@@ -20,7 +20,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+        <activity android:name=".AddAlarm">
+        </activity>
+
+        <activity android:name=".SubSetting">
+        </activity>
+        <activity android:name=".SetAlarm">
+        </activity>
+
+
     </application>
 
 </manifest>

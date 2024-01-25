@@ -19,9 +19,9 @@ class DBManager(
     ):SQLiteOpenHelper(context, name, factory, version) {
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db!!.execSQL ("CREATE TABLE alarm (id string, ampm INTEGER, hour INTEGER, minute INTEGER)")
-
+        db!!.execSQL("CREATE TABLE alarm (id INTEGER PRIMARY KEY AUTOINCREMENT, ampm INTEGER, hour INTEGER, minute INTEGER)")
     }
+
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {}
 }
