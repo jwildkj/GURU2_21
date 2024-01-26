@@ -11,11 +11,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.example.alarmtest_05.DBManager
-import com.example.alarmtest_05.DB_AMPM
-import com.example.alarmtest_05.DB_HOUR
-import com.example.alarmtest_05.DB_MINUTE
-import com.example.alarmtest_05.DB_NAME
+import com.example.guru2_21_alarmapp.DBManager
+import com.example.guru2_21_alarmapp.COL_AMPM
+import com.example.guru2_21_alarmapp.COL_HOUR
+import com.example.guru2_21_alarmapp.COL_MINUTE
+import com.example.guru2_21_alarmapp.COL_NAME
 import java.util.Calendar
 
 class SetAlarm : AppCompatActivity() {
@@ -114,10 +114,10 @@ class SetAlarm : AppCompatActivity() {
 
         //각 정보 contentValues에 추가
         val contentValues = ContentValues()
-        contentValues.put(DB_NAME, name)
-        contentValues.put(DB_AMPM, ampm)
-        contentValues.put(DB_HOUR, hour)
-        contentValues.put(DB_MINUTE, minute)
+        contentValues.put(COL_NAME, name)
+        contentValues.put(COL_AMPM, ampm)
+        contentValues.put(COL_HOUR, hour)
+        contentValues.put(COL_MINUTE, minute)
 
         //DB에 데이터 삽입
         val result = sqlitdb.insert("Alarm", null, contentValues)
