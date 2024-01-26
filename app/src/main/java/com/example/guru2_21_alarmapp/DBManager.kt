@@ -6,11 +6,11 @@ import android.database.sqlite.SQLiteOpenHelper
 
 const val DATABASE_NAME = "TimeDatabase"
 const val TABLE_NAME = "TimeTable"
-const val db_id = "ID"
-const val DB_AMPM = "AMPM"
-const val DB_HOUR = "Hour"
-const val DB_MINUTE = "Minute"
-const val DB_NAME = "name"
+const val COL_ID = "ID"
+const val COL_AMPM = "AMPM"
+const val COL_HOUR = "Hour"
+const val COL_MINUTE = "Minute"
+const val COL_NAME = "name"
 
 class DBManager(
     context: Context?,
