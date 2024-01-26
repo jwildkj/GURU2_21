@@ -1,4 +1,4 @@
-package com.example.alarmtest_05
+package com.example.guru2_21_alarmapp
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
