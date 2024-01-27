@@ -1,13 +1,16 @@
 package com.example.guru2_21_alarmapp
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -29,9 +32,11 @@ class MainActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, alarmList)
         alarmListView.adapter = adapter
 
-        alarmListView.setOnItemClickListener(AdapterView.OnItemClickListener { _, _, position, _ ->
-            // 선택한 알람 수정?
-        })
+        alarmListView.setOnItemLongClickListener { _, _, position, _ ->
+            //알람 삭제 확인
+            showDeleteConfirmationDialog(position)
+            true
+        }
     }
 
     private fun getAllAlarms(): ArrayList<String> {
@@ -66,18 +71,19 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ADD_ALARM_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            //SetAlarm에서 설정한 알람 메인에 표시
             val hour = data?.getIntExtra("hour", 0) ?: 0
             val minute = data?.getIntExtra("minute", 0) ?: 0
+            val problemType = data?.getStringExtra("problemType") ?: "사칙연산"
 
-            // 알람 리스트에 추가
-            val newAlarm = String.format("%02d : %02d", hour, minute)
+            //알람 시간과 문제
+            val newAlarm = String.format("%02d : %02d - $problemType", hour, minute)
             alarmList.add(newAlarm)
 
-            // 어댑터에 변경된 데이터를 알려서 리스트뷰 갱신
+            // 리스트뷰 갱신
             (alarmListView.adapter as ArrayAdapter<String>).notifyDataSetChanged()
         }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.alarmlist, menu)
@@ -92,13 +98,45 @@ class MainActivity : AppCompatActivity() {
                 startActivityForResult(intent, ADD_ALARM_REQUEST_CODE)
                 return true
             }
-            R.id.sub_set -> {
-                //주제 설정 선택
-                val intent = Intent(this, SubSetting::class.java)
-                startActivity(intent)
-                return true
-            }
+
             else -> return super.onOptionsItemSelected(item)
         }
     }
+
+    private fun showDeleteConfirmationDialog(position: Int) {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("알람을 삭제하시겠습니까?")
+            .setPositiveButton("삭제") { _, _ ->
+                deleteAlarm(position)
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
+
+    private fun deleteAlarm(position: Int) {
+        val selectedAlarm = alarmList[position]
+
+        val parts = selectedAlarm.split(" - ")
+        val timeString = parts[0]
+
+        val timeParts = timeString.split(" : ")
+        val hour = timeParts[0].toInt()
+        val minute = timeParts[1].toInt()
+
+        //데이터베이스에서 해당 알람을 삭제
+        if (dbManager.deleteAlarm(hour, minute)) {
+            //업데이트
+            alarmList.removeAt(position)
+            (alarmListView.adapter as ArrayAdapter<String>).notifyDataSetChanged()
+            Toast.makeText(this, "알람이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+        } else {
+            // 삭제 실패 시 메시지 출력
+            Toast.makeText(this, "알람 삭제에 실패했습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 }

@@ -10,28 +10,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:layout_height="246dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/set_ampm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:paddingEnd="10dp"
             android:text="am"
-            android:textSize="30sp"
-            android:paddingEnd="10dp"/>
+            android:textSize="30sp" />
 
 
         <TextView
             android:id="@+id/set_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="00 : 00"
             android:layout_gravity="center_vertical"
-            android:textSize="60sp"
-            android:paddingStart="20dp"/>
+            android:paddingStart="20dp"
+            android:text="00 : 00"
+            android:textSize="60sp" />
 
 
     </LinearLayout>
@@ -39,25 +39,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:paddingStart="20dp"
-            android:text="이름"
-            android:textSize="30dp" />
-
-        <EditText
-            android:id="@+id/edt_name"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:inputType="text"
-            android:paddingStart="20dp"
-            android:textSize="25sp"
-            android:hint="이름 입력" />
-
-    </LinearLayout>
+        android:orientation="vertical"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -67,26 +49,54 @@
         <TextView
             android:id="@+id/select_problem"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
+            android:paddingStart="20dp"
             android:text="문제"
-            android:textSize="30sp"
-            android:paddingStart="20dp"/>
+            android:textSize="30sp" />
 
-        <TextView
+        <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:text="ex) 사칙연산, 3문제"
-            android:textSize="15sp"
-            android:paddingStart="20dp" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radioButton1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="사칙연산" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="단어 퀴즈" />
+
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="사진" />
+
+            <RadioButton
+                android:id="@+id/radioButton4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="만보기" />
+
+            <RadioButton
+                android:id="@+id/radioButton5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="음성 인식" />
+
+        </RadioGroup>
 
     </LinearLayout>
 
-
-
-
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:gravity="bottom">
 
         <TableRow>
