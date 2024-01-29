@@ -1,8 +1,10 @@
 package com.example.guru2_21_alarmapp
 
+import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -11,7 +13,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,6 +40,15 @@ class MainActivity : AppCompatActivity() {
             //알람 삭제 확인
             showDeleteConfirmationDialog(position)
             true
+        }
+
+        // 보행 탐지기 권한 허용
+        if (ContextCompat.checkSelfPermission(this,
+            Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
+            Toast.makeText(this, "No permission!!", Toast.LENGTH_SHORT).show()
+
+            // ask for permission
+            requestPermissionLauncher.launch(arrayOf(Manifest.permission.ACTIVITY_RECOGNITION))
         }
     }
 
@@ -139,4 +152,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // 권한 허용 요청
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()) {
+
+        var results = true
+        it.values.forEach {
+            if (it == false) {
+                results = false
+                return@forEach
+            }
+        }
+
+        if (!results) {
+            Toast.makeText(this@MainActivity, "권한이 필요합니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
