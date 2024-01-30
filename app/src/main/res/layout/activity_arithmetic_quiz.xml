@@ -1,0 +1,39 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".arithmetic">
+
+    <TextView
+        android:id="@+id/questionTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"/>
+
+    <EditText
+        android:id="@+id/answerEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/questionTextView"
+        android:layout_marginTop="16dp"
+        android:inputType="number"
+        android:hint="답을 입력하세요."
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/checkAnswerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/answerEditText"
+        android:layout_marginTop="16dp"
+        android:text="정답 확인"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>
+
