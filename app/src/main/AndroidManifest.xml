@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <!-- 스텝 감지 센서 사용 설정, 만보기 사용시 사용-->
-    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
-
-    <!--    //카메라 접근 권한-->
-    <uses-feature android:name="android.hardware.camera" />
-    <!--    //갤러리 접근 권한-->
+    <!-- 스텝 감지 센서 사용 설정, 만보기 사용시 사용 -->
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" /> <!-- //카메라 접근 권한 -->
+    <uses-feature android:name="android.hardware.camera" /> <!-- //갤러리 접근 권한 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
@@ -23,10 +19,15 @@
         android:theme="@style/Theme.GURU2_21_AlarmApp"
         tools:targetApi="31">
         <activity
+            android:name=".SetThemeList"
+            android:parentActivityName=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".StepCount"
             android:exported="false" />
         <activity
             android:name=".SetStepCount"
+            android:parentActivityName=".SetThemeList"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

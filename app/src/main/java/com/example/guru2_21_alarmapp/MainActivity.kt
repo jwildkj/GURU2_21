@@ -111,6 +111,11 @@ class MainActivity : AppCompatActivity() {
                 startActivityForResult(intent, ADD_ALARM_REQUEST_CODE)
                 return true
             }
+            R.id.sub_set -> {
+                val intent = Intent(this, SetThemeList::class.java)
+                startActivity(intent)
+                return true
+            }
 
             else -> return super.onOptionsItemSelected(item)
         }

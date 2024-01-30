@@ -32,6 +32,9 @@ class StepCount : AppCompatActivity(), SensorEventListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_step_count)
 
+        // title bar
+        supportActionBar?.setTitle("만보기")
+
         tv_stepCount = findViewById<TextView>(R.id.stepCountText)
         tv_stepCount.setText("0")       // 처음 화면에 띄울 숫자는 0
 
