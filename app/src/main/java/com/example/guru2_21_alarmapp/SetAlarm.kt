@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
@@ -17,6 +18,7 @@ class SetAlarm : AppCompatActivity() {
 
     lateinit var set_ampm: TextView
     lateinit var set_time: TextView
+    lateinit var set_name: EditText
     lateinit var btn_cancel: Button
     lateinit var btn_save: Button
     lateinit var dbManager: DBManager
@@ -28,10 +30,11 @@ class SetAlarm : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.set_alarm)
+        setContentView(R.layout.activity_set_alarm)
 
         set_ampm = findViewById(R.id.set_ampm)
         set_time = findViewById(R.id.set_time)
+        set_name = findViewById(R.id.edt_name)
         btn_cancel = findViewById(R.id.btn_cancel)
         btn_save = findViewById(R.id.btn_save)
         radioButton1 = findViewById(R.id.radioButton1)
@@ -100,13 +103,15 @@ class SetAlarm : AppCompatActivity() {
         val timeParts = set_time.text.split(" : ")
         val hour = timeParts[0].toInt()
         val minute = timeParts[1].toInt()
+        val name = set_name.text.toString()
 
         val contentValues = ContentValues()
+        contentValues.put(COL_NAME, name)
         contentValues.put(COL_AMPM, ampm)
         contentValues.put(COL_HOUR, hour)
         contentValues.put(COL_MINUTE, minute)
 
-        val result = db.insert("alarm", null, contentValues)
+        val result = db.insert("Alarm", null, contentValues)
 
         if (result == -1L) {
             // 저장 실패
