@@ -2,6 +2,7 @@ package com.example.guru2_21_alarmapp
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -28,6 +29,10 @@ class SetStepCount : AppCompatActivity() {
     // 데이터베이스 이용시 활용할 텍스트
     private var setStepText: String = "걸음수"
 
+    // 걸음수 데이터 베이스 활용
+    lateinit var stepdbManager: stepDBManager
+    lateinit var sqlitedb: SQLiteDatabase
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +52,14 @@ class SetStepCount : AppCompatActivity() {
 
         // Button
         setStepCountButton = findViewById<Button>(R.id.setStepCountButton)
+
+        // 데이터베이스 생성
+        stepdbManager = stepDBManager(this, "stepsetting", null, 1)
+        sqlitedb = stepdbManager.writableDatabase
+        sqlitedb.execSQL("INSERT INTO stepsetting VALUES ('"
+                +setStepText+"', "
+                +setStepNum+");")
+        sqlitedb.close()
 
         // 걸음 수 설정
         setStepCountRBs.setOnCheckedChangeListener { group, checkedId ->
@@ -75,6 +88,15 @@ class SetStepCount : AppCompatActivity() {
                     setStepNum = setStepCountET1.text.toString().toInt()
                 }
             }
+
+            // 데이터베이스 업데이트, 수정
+            sqlitedb = stepdbManager.writableDatabase
+            sqlitedb.execSQL("UPDATE stepsetting SET goal = " + setStepNum + " WHERE step = '"
+                    +setStepText+"';")
+            sqlitedb.close()
+
+            val intent2 = Intent(this, StepCount::class.java)
+            intent2.putExtra("setStepText", setStepText)
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
