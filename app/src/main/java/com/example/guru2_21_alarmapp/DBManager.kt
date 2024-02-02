@@ -6,11 +6,11 @@ import android.database.sqlite.SQLiteOpenHelper
 
 const val DATABASE_NAME = "TimeDatabase"
 const val TABLE_NAME = "TimeTable"
-const val COL_ID = "ID"
-const val COL_AMPM = "AMPM"
-const val COL_HOUR = "Hour"
-const val COL_MINUTE = "Minute"
-const val COL_NAME = "name"
+const val COL_ID = "id"
+const val COL_AMPM = "ampm"
+const val COL_HOUR = "hour"
+const val COL_MINUTE = "minute"
+const val COL_PROTYPE = "problem_type"
 
 class DBManager(
     context: Context?,
@@ -20,7 +20,7 @@ class DBManager(
 ) : SQLiteOpenHelper(context, name, factory, version) {
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db!!.execSQL("CREATE TABLE alarm (id INTEGER PRIMARY KEY AUTOINCREMENT, name string, ampm INTEGER, hour INTEGER, minute INTEGER)")
+        db!!.execSQL("CREATE TABLE alarm (id INTEGER PRIMARY KEY AUTOINCREMENT, ampm INTEGER, hour INTEGER, minute INTEGER, problem_type TEXT)")
         //id는 자동 증가, 나머지는 삽입 예정
     }
 

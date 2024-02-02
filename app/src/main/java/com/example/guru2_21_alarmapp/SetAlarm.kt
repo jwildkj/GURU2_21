@@ -1,8 +1,11 @@
 package com.example.guru2_21_alarmapp
 
 import android.app.Activity
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +21,6 @@ class SetAlarm : AppCompatActivity() {
 
     lateinit var set_ampm: TextView
     lateinit var set_time: TextView
-    lateinit var set_name: EditText
     lateinit var btn_cancel: Button
     lateinit var btn_save: Button
     lateinit var dbManager: DBManager
@@ -34,7 +36,6 @@ class SetAlarm : AppCompatActivity() {
 
         set_ampm = findViewById(R.id.set_ampm)
         set_time = findViewById(R.id.set_time)
-        set_name = findViewById(R.id.edt_name)
         btn_cancel = findViewById(R.id.btn_cancel)
         btn_save = findViewById(R.id.btn_save)
         radioButton1 = findViewById(R.id.radioButton1)
@@ -103,15 +104,16 @@ class SetAlarm : AppCompatActivity() {
         val timeParts = set_time.text.split(" : ")
         val hour = timeParts[0].toInt()
         val minute = timeParts[1].toInt()
-        val name = set_name.text.toString()
+        val problemType = SelectQuiz()
+        Log.d("SetAlarm", "Problem Type: $problemType") //얘까진 잘 됨
 
         val contentValues = ContentValues()
-        contentValues.put(COL_NAME, name)
         contentValues.put(COL_AMPM, ampm)
         contentValues.put(COL_HOUR, hour)
         contentValues.put(COL_MINUTE, minute)
+        contentValues.put(COL_PROTYPE, problemType)
 
-        val result = db.insert("Alarm", null, contentValues)
+        val result = db.insert("alarm", null, contentValues)
 
         if (result == -1L) {
             // 저장 실패
@@ -126,7 +128,7 @@ class SetAlarm : AppCompatActivity() {
             val intent = Intent()
             intent.putExtra("hour", hour)
             intent.putExtra("minute", minute)
-            intent.putExtra("problemType", SelectQuiz())
+            intent.putExtra("problemType", problemType)
             setResult(Activity.RESULT_OK, intent)
             finish()
         }
@@ -144,5 +146,17 @@ class SetAlarm : AppCompatActivity() {
             else -> "사칙연산" //기본값
         }
     }
+    
+//    private fun SelectQuizToInt(): Int {
+//        var problems = SelectQuiz()
+//        return when (problems) {
+//            "사칙연산" -> 0
+//            "단어 퀴즈" -> 1
+//            "사진" -> 2
+//            "만보기" -> 3
+//            "음성 인식" -> 4
+//            else -> 0 //기본값, 사칙연산
+//        }
+//    }
 
 }
