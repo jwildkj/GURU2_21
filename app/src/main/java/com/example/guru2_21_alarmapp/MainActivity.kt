@@ -5,7 +5,9 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -22,6 +24,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var alarmListView: ListView
     lateinit var alarmList: ArrayList<String>
     lateinit var dbManager: DBManager
+
+    var currentTime: Long = System.currentTimeMillis()      // 현재 시간
+    var dataFormat = SimpleDateFormat("hh : mm")     // 현재 시간 "시간 : 분" 형식으로
+    val mDelayHandler: Handler by lazy { Handler() }        // 시간 갱신을 위한 handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +47,9 @@ class MainActivity : AppCompatActivity() {
             showDeleteConfirmationDialog(position)
             true
         }
+
+        // 시간갱신
+        showRingAlarm()
 
         // 보행 탐지기 권한 허용
         if (ContextCompat.checkSelfPermission(this,
@@ -155,6 +164,61 @@ class MainActivity : AppCompatActivity() {
             // 삭제 실패 시 메시지 출력
             Toast.makeText(this, "알람 삭제에 실패했습니다.", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    // 시간 갱신
+    private fun waitNext() {
+        mDelayHandler.postDelayed(::showRingAlarm, 1000)    // 1초마다 showRingAlarm() 실행
+    }
+
+    // 시간 확인
+    private fun showRingAlarm() {
+        var mCheckTime = checkTime()
+        currentTime = System.currentTimeMillis()    // 시간 갱신
+
+        if (mCheckTime != true){
+            waitNext()
+        }
+    }
+
+    // 알람 리스트와 현재 시간을 비교
+    // 만약 알람 리스트에 있는 시간과 현재 시간이 같으면 ringalarm 화면으로 넘어감 + 설정한 퀴즈방식을 intent로 넘김
+    private fun checkTime(): Boolean {
+        val alarmData = dbManager.readableDatabase.rawQuery("SELECT * FROM alarm", null)
+        var alarms = ArrayList<String>()            // 알람
+        var protypes = ArrayList<String>()          // 해당 알람에 설정한 퀴즈방식
+
+        if (alarmData.moveToFirst()) {
+            do {
+                val colHour = alarmData.getColumnIndex(COL_HOUR)
+                val colMinute = alarmData.getColumnIndex(COL_MINUTE)
+                val colProtype = alarmData.getColumnIndex(COL_PROTYPE)
+
+                if (colHour != -1 && colMinute != -1) {
+                    val hour = alarmData.getInt(colHour)
+                    val minute = alarmData.getInt(colMinute)
+                    val protype = alarmData.getString(colProtype)
+                    val alarmTime = String.format("%02d : %02d", hour, minute)
+                    alarms.add(alarmTime)
+                    protypes.add(protype)
+                }
+            } while (alarmData.moveToNext())
+        }
+        alarmData.close()
+
+        for (i in 0 until alarms.count()){
+            // 현재시간과 설정한 시간을 확인
+            if (dataFormat.format(currentTime) == alarms[i]) {
+                val proType_name = protypes[i]
+                val intent = Intent(this, RingAlarm::class.java)
+                intent.putExtra("proType_name", proType_name)
+                startActivity(intent)
+
+                return true
+            }
+        }
+
+        return false
     }
 
     // 권한 허용 요청

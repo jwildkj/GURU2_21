@@ -41,6 +41,10 @@
         <activity android:name=".AddAlarm" />
         <activity android:name=".SubSetting" />
         <activity android:name=".SetAlarm" />
+        <activity android:name=".RingAlarm" />
+        <activity android:name=".arithmetic" />
+        <activity android:name=".WordQuiz"/>
+        <activity android:name=".TakePhoto" />
     </application>
 
 </manifest>
