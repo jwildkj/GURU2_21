@@ -28,7 +28,7 @@ class SetThemeList : AppCompatActivity() {
         supportActionBar?.setTitle("주제 설정")
 
         goSetPuls.setOnClickListener {
-            val intent = Intent(this, arithmetic::class.java)     // 아직 파일이 없어서 메인으로 설정
+            val intent = Intent(this, SetArithmetic::class.java)
             startActivity(intent)
         }
         goSetWordQuiz.setOnClickListener {
