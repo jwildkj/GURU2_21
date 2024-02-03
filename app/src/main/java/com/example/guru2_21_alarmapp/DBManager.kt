@@ -20,7 +20,7 @@ class DBManager(
 ) : SQLiteOpenHelper(context, name, factory, version) {
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db!!.execSQL("CREATE TABLE alarm (id INTEGER PRIMARY KEY AUTOINCREMENT, ampm INTEGER, hour INTEGER, minute INTEGER, problem_type TEXT)")
+        db!!.execSQL("CREATE TABLE alarm (id INTEGER PRIMARY KEY AUTOINCREMENT, ampm INTEGER, hour INTEGER, minute INTEGER, problem_type string)")
         //id는 자동 증가, 나머지는 삽입 예정
     }
 
