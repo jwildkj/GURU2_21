@@ -26,15 +26,6 @@ class RingAlarm : AppCompatActivity() {
         val minute = intent.getIntExtra("minute", 0)
         val problem = intent.getIntExtra("problem", 0)
 
-        // ampm에 따라 "am" 또는 "pm" 설정
-        txv_ampm.text = if (ampm == 0) "am" else "pm"
-
-        // 시간 설정
-        val timeString = String.format("%02d : %02d", hour, minute)
-        txv_time.text = timeString
-
-
-
         when (problem) {
             0 -> {
                 val intent = Intent(this, arithmetic::class.java) //이동할 액티비티 값 가져오기
