@@ -48,9 +48,6 @@
         <activity android:name=".WordQuizSetting" />
         <activity android:name=".SetPhoto" />
         <activity android:name=".SetArithmetic" />
-
-
-
     </application>
 
 </manifest>
