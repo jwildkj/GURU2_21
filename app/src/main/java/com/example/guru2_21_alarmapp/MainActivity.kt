@@ -70,12 +70,14 @@ class MainActivity : AppCompatActivity() {
                 val colAMPM = alarmData.getColumnIndex(COL_AMPM)
                 val colHour = alarmData.getColumnIndex(COL_HOUR)
                 val colMinute = alarmData.getColumnIndex(COL_MINUTE)
+                val problemType = alarmData.getColumnIndex(COL_PROTYPE)
 
                 if (colAMPM != -1 && colHour != -1 && colMinute != -1) {
                     val ampm = if (alarmData.getInt(colAMPM) == 0) "am" else "pm"
                     val hour = alarmData.getInt(colHour)
                     val minute = alarmData.getInt(colMinute)
-                    val alarmTime = String.format("%02d : %02d $ampm", hour, minute)
+                    val problem_type = alarmData.getString(problemType)
+                    val alarmTime = String.format("%02d : %02d - $problem_type", hour, minute)
                     alarms.add(alarmTime)
                 }
             } while (alarmData.moveToNext())
@@ -93,6 +95,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ADD_ALARM_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
             val hour = data?.getIntExtra("hour", 0) ?: 0
             val minute = data?.getIntExtra("minute", 0) ?: 0
             val problemType = data?.getStringExtra("problemType") ?: "사칙연산"

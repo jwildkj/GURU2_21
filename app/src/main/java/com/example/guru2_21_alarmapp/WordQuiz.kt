@@ -11,24 +11,39 @@ import kotlin.random.Random
 class WordQuiz : AppCompatActivity() {
 
     private val quizData = mutableMapOf(
+
         "Apple" to listOf("사과", "바나나", "딸기"),
         "Banana" to listOf("바나나", "사과", "오렌지"),
         "Orange" to listOf("오렌지", "사과", "바나나"),
+        "Doctor" to listOf("의사", "간호사", "나무꾼"),
+        "Dog" to listOf("개", "고양이", "거북이"),
+        "Car" to listOf("자동차", "오토바이", "자전거"),
+        "Book" to listOf("책", "신문", "잡지"),
+        "Computer" to listOf("컴퓨터", "노트북", "스마트폰"),
+        "Rain" to listOf("비", "눈", "안개"),
+        "Mountain" to listOf("산", "바다", "육지")
     )
 
     private var currentWord = ""
     private var currentOptions = listOf<String>()
+    private var answeredQuizCount = 0 // 사용자가 푼 문제 수
+    private var quizCountLimit = 0 // 사용자가 설정한 문제 수 제한
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.word_quiz)
 
         showRandomQuiz()
 
         findViewById<Button>(R.id.nextButton).setOnClickListener {
-            showRandomQuiz()
+            if (answeredQuizCount < quizCountLimit) {
+                showRandomQuiz()
+                answeredQuizCount++
+            } else {
+                //사용자가 설정한 문제 수를 모두 풀었을 때 끄기 버튼 활성화
+                findViewById<Button>(R.id.ExitButton).isEnabled = true
+            }
         }
-
     }
 
     private fun showRandomQuiz() {

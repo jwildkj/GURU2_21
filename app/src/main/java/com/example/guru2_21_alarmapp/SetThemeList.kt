@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.example.guru2_21_alarmapp.MainActivity.Companion.ADD_ALARM_REQUEST_CODE
 
 class SetThemeList : AppCompatActivity() {
     lateinit var goSetPuls: Button
@@ -27,13 +28,14 @@ class SetThemeList : AppCompatActivity() {
         supportActionBar?.setTitle("주제 설정")
 
         goSetPuls.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)     // 아직 파일이 없어서 메인으로 설정
+            val intent = Intent(this, SetArithmetic::class.java)
             startActivity(intent)
         }
         goSetWordQuiz.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)     // 단어 설정 페이지?
+            val intent = Intent(this, WordQuizSetting::class.java)
             startActivity(intent)
         }
+
         goSetPhoto.setOnClickListener {
             val intent = Intent(this, SetPhoto::class.java)
             startActivity(intent)
@@ -42,9 +44,8 @@ class SetThemeList : AppCompatActivity() {
             val intent = Intent(this, SetStepCount::class.java)
             startActivity(intent)
         }
-        goSetVoice.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)     // 아직 파일이 없어서 메인으로 설정
-            startActivity(intent)
+        //goSetVoice.setOnClickListener {
+           // val intent = Intent(this, MainActivity::class.java)     // 아직 파일이 없어서 메인으로 설정
+           // startActivity(intent)
         }
     }
-}

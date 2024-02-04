@@ -1,6 +1,5 @@
 package com.example.guru2_21_alarmapp
 
-
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -15,6 +14,7 @@ class arithmetic : AppCompatActivity() {
     private lateinit var answerEditText: EditText
     private lateinit var checkAnswerButton: Button
 
+    private var setArithmetic: SetArithmetic? = null
     private var correctAnswer: Int = 0
     private var operator: String = ""
 
@@ -26,6 +26,8 @@ class arithmetic : AppCompatActivity() {
         answerEditText = findViewById(R.id.answerEditText)
         checkAnswerButton = findViewById(R.id.checkAnswerButton)
 
+        setArithmetic = intent.getSerializableExtra("setArithmetic") as? SetArithmetic
+
         generateQuestion()
 
         checkAnswerButton.setOnClickListener { checkAnswer() }
@@ -36,14 +38,14 @@ class arithmetic : AppCompatActivity() {
         val number1 = random.nextInt(100) + 1
         val number2 = random.nextInt(100) + 1
 
-        // 랜덤으로 연산자 선택
+        //랜덤으로 연산자 선택
         val operators = arrayOf("+", "-", "*")
         operator = operators[random.nextInt(operators.size)]
 
         when (operator) {
             "+" -> correctAnswer = number1 + number2
             "-" -> {
-                // 뺄셈의 경우 음수가 나오지 않도록 처리
+                //뺄셈의 경우 음수가 나오지 않도록 처리
                 correctAnswer = if (number1 >= number2) number1 - number2 else number2 - number1
             }
             "*" -> correctAnswer = number1 * number2
@@ -61,6 +63,8 @@ class arithmetic : AppCompatActivity() {
 
             if (userIntAnswer == correctAnswer) {
                 showToast("정답입니다!")
+                //문제를 맞추면 SetArithmetic에 알림
+                setArithmetic?.onAnswerCorrect()
             } else {
                 showToast("틀렸습니다..")
                 return
