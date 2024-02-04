@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+//import com.example.guru2_21_alarmapp
 
 class RingAlarm : AppCompatActivity() {
 
@@ -48,11 +49,11 @@ class RingAlarm : AppCompatActivity() {
                     startActivity(intent)
                     finish() //현재 액티비티 종료
                 }
-//            4 -> {
-//                val intent = Intent(this, 클래스 이름::class.java) //이동할 액티비티 값 가져오기
-//                startActivity(intent)
-//                finish() //현재 액티비티 종료
-//            }
+                "음성 인식" -> {
+                    val intent = Intent(this, VoiceActivity::class.java) //이동할 액티비티 값 가져오기
+                    startActivity(intent)
+                    finish() //현재 액티비티 종료
+                }
                 else -> {
                     val intent = Intent(this, arithmetic::class.java) //이동할 액티비티 값 가져오기
                     startActivity(intent)

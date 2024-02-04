@@ -72,6 +72,10 @@ class MainActivity : AppCompatActivity() {
                 val colMinute = alarmData.getColumnIndex(COL_MINUTE)
                 val problemType = alarmData.getColumnIndex(COL_PROTYPE)
 
+                if (colAMPM != -1 && colHour != -1 && colMinute != -1 && problemType != -1) {
+                    //
+                }
+
                 if (colAMPM != -1 && colHour != -1 && colMinute != -1) {
                     val ampm = if (alarmData.getInt(colAMPM) == 0) "am" else "pm"
                     val hour = alarmData.getInt(colHour)

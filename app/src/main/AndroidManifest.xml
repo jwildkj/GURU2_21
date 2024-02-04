@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
 
     <application
         android:allowBackup="true"
@@ -20,15 +22,15 @@
         tools:targetApi="31">
         <activity
             android:name=".SetThemeList"
-            android:parentActivityName=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".StepCount"
             android:exported="false" />
         <activity
             android:name=".SetStepCount"
-            android:parentActivityName=".SetThemeList"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".SetThemeList" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -43,8 +45,9 @@
         <activity android:name=".SetAlarm" />
         <activity android:name=".RingAlarm" />
         <activity android:name=".arithmetic" />
-        <activity android:name=".WordQuiz"/>
+        <activity android:name=".WordQuiz" />
         <activity android:name=".TakePhoto" />
+        <activity android:name=".VoiceActivity" />
         <activity android:name=".WordQuizSetting" />
         <activity android:name=".SetPhoto" />
         <activity android:name=".SetArithmetic" />
